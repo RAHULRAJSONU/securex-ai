@@ -47,15 +47,15 @@ public class RoleHierarchyService {
                 .orElseThrow(() -> new RuntimeException("Role hierarchy not found for the namespace: " + namespace + " and objectId: " + objectId));
     }
 
-    public boolean activateRoleHierarchy(String namespace){
-        log.info("Activating Role Hierarchy for Namespace: {}",namespace);
+    public boolean activateRoleHierarchy(String namespace) {
+        log.info("Activating Role Hierarchy for Namespace: {}", namespace);
         NamespaceConfig byNamespace = namespaceConfigRepository.findByNamespace(namespace);
-        if(byNamespace != null){
+        if (byNamespace != null) {
             byNamespace.setRoleHierarchyEnabled(true);
             namespaceConfigRepository.save(byNamespace);
             return true;
-        }else {
-            throw new RuntimeException("Namespace not found: "+namespace);
+        } else {
+            throw new RuntimeException("Namespace not found: " + namespace);
         }
     }
 
@@ -71,7 +71,7 @@ public class RoleHierarchyService {
         return userRoleIndex <= requiredPermissionIndex;
     }
 
-    public List<String> getInheritedRoles(String namespace, String objectId, String requiredRole){
+    public List<String> getInheritedRoles(String namespace, String objectId, String requiredRole) {
         Optional<RoleHierarchy> activeHierarchy = findActiveHierarchy(namespace, objectId);
         if (activeHierarchy.isEmpty()) {
             return List.of();

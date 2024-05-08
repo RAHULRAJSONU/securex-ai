@@ -9,4 +9,6 @@ public interface RoleHierarchyRepository extends JpaRepository<RoleHierarchy, Lo
     Optional<RoleHierarchy> findByNamespaceAndObjectIdAndIsActiveTrue(String namespace, String objectId);
 
     Optional<RoleHierarchy> findByNamespaceAndObjectId(String namespace, String objectId);
+
+    boolean existsByNamespaceAndObjectId(String namespace, String objectId);
 }

@@ -2,12 +2,10 @@ package io.github.rahulrajsonu.securexai.service;
 
 import io.github.rahulrajsonu.securexai.data.entity.NamespaceConfig;
 import io.github.rahulrajsonu.securexai.data.entity.Permission;
-import io.github.rahulrajsonu.securexai.data.entity.RoleHierarchy;
 import io.github.rahulrajsonu.securexai.data.repository.NamespaceConfigRepository;
 import io.github.rahulrajsonu.securexai.data.repository.PermissionRepository;
 import io.github.rahulrajsonu.securexai.parser.Attribute;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,7 +24,6 @@ public class NamespaceConfigService {
     private final PermissionService permissionService;
     private final RoleHierarchyService roleHierarchyService;
 
-    @Autowired
     public NamespaceConfigService(NamespaceConfigRepository namespaceConfigRepository,
                                   PermissionRepository permissionRepository, PermissionService permissionService, RoleHierarchyService roleHierarchyService) {
         this.namespaceConfigRepository = namespaceConfigRepository;
@@ -69,7 +65,7 @@ public class NamespaceConfigService {
                     break;
                 }
             }
-            return hasAccess ? hasAccess : checkInheritance(namespace, objectId, requiredRole, user);
+            return hasAccess || checkInheritance(namespace, objectId, requiredRole, user);
         } else {
             return false;
         }
@@ -78,19 +74,19 @@ public class NamespaceConfigService {
     private boolean checkInheritance(String namespace, String objectId, String requiredRole, String user) {
         List<String> inheritedRoles = roleHierarchyService.getInheritedRoles(namespace, objectId, requiredRole);
         boolean related = false;
-        if(inheritedRoles.isEmpty()){
+        if (inheritedRoles.isEmpty()) {
             return false;
         }
         List<Permission> permissions = getRelation(namespace, objectId, inheritedRoles);
         for (Permission permission : permissions) {
-            if(permission.getUsers().contains(user)){
+            if (permission.getUsers().contains(user)) {
                 related = true;
                 break;
             }
             List<String> possibleNesting = permission.getUsers().stream().filter(u -> !u.startsWith("user:")).toList();
             for (String possible : possibleNesting) {
                 String[] objectRelation = possible.split("#");
-                if(objectRelation.length!=2){
+                if (objectRelation.length != 2) {
                     continue;
                 }
                 String[] namespaceObject = objectRelation[0].split(":");
@@ -112,7 +108,7 @@ public class NamespaceConfigService {
         log.info("Getting all relation for, namespace: {}, objectId: {}", namespace, objectId);
 
         List<Permission> relations = permissionRepository.findByNamespaceConfigAndObjectIdAndRelationIn(namespace, objectId, relationList);
-        log.info("Possible permission map: {}",relations);
+        log.info("Possible permission map: {}", relations);
         return relations;
     }
 }

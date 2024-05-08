@@ -31,6 +31,7 @@ public interface PermissionRepository extends JpaRepository<Permission, Long> {
     Collection<String> findRelationsByNamespaceAndObjectIdAndUser(@Param("namespace") String namespace,
                                                                   @Param("objectId") String objectId,
                                                                   @Param("user") String user);
+
     @Query("""
             SELECT p FROM Permission p
             WHERE p.namespaceConfig.namespace = :namespace AND p.objectId = :objectId AND p.relation IN :relations

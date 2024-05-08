@@ -26,7 +26,7 @@ public class RoleHierarchyController {
 
     @GetMapping("/hierarchy/activate/{namespace}")
     public ResponseEntity<?> activateRoleHierarchy(@NonNull @PathVariable String namespace) {
-        return ResponseEntity.ok(service.activateRoleHierarchy(namespace) ? "Role Hierarchy Activated for Namespace: "+namespace : "");
+        return ResponseEntity.ok(service.activateRoleHierarchy(namespace) ? "Role Hierarchy Activated for Namespace: " + namespace : "");
     }
 
     @PostMapping("/hierarchy")

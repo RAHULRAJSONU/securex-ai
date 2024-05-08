@@ -1,0 +1,20 @@
+spring:
+  application.name: securex-ai
+  datasource:
+    url: jdbc:mysql://localhost:3306/securex-ai?useSSL=false
+    username: root
+    password: root
+    driverClassName: com.mysql.cj.jdbc.Driver
+    hikari:
+      max-lifetime: 45000
+      keepalive-time: 40000
+      idle-timeout: 35000
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true

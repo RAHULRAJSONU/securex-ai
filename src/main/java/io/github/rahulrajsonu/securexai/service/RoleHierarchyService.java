@@ -1,10 +1,13 @@
 package io.github.rahulrajsonu.securexai.service;
 
+import io.github.rahulrajsonu.securexai.data.entity.NamespaceConfig;
 import io.github.rahulrajsonu.securexai.data.entity.RoleHierarchy;
 import io.github.rahulrajsonu.securexai.data.repository.NamespaceConfigRepository;
 import io.github.rahulrajsonu.securexai.data.repository.PermissionRepository;
 import io.github.rahulrajsonu.securexai.data.repository.RoleHierarchyRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RoleHierarchyService {
 
+    private static final Logger log = LoggerFactory.getLogger(RoleHierarchyService.class);
     private final RoleHierarchyRepository repository;
     private final PermissionRepository permissionRepository;
     private final NamespaceConfigRepository namespaceConfigRepository;
@@ -41,6 +45,18 @@ public class RoleHierarchyService {
     public RoleHierarchy getHierarchy(String namespace, String objectId) {
         return repository.findByNamespaceAndObjectId(namespace, objectId)
                 .orElseThrow(() -> new RuntimeException("Role hierarchy not found for the namespace: " + namespace + " and objectId: " + objectId));
+    }
+
+    public boolean activateRoleHierarchy(String namespace){
+        log.info("Activating Role Hierarchy for Namespace: {}",namespace);
+        NamespaceConfig byNamespace = namespaceConfigRepository.findByNamespace(namespace);
+        if(byNamespace != null){
+            byNamespace.setRoleHierarchyEnabled(true);
+            namespaceConfigRepository.save(byNamespace);
+            return true;
+        }else {
+            throw new RuntimeException("Namespace not found: "+namespace);
+        }
     }
 
     public boolean hasRelation(String namespace, String objectId, String userRole, String requiredRole) {

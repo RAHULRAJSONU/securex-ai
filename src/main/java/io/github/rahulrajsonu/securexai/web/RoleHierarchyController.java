@@ -18,10 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class RoleHierarchyController {
     private final RoleHierarchyService service;
 
-    @GetMapping("/hierarchy")
+    @GetMapping("/hierarchy/{namespace}/{objectId}")
     public ResponseEntity<?> getRoleHierarchy(@NonNull @PathVariable String namespace,
                                               @NonNull @PathVariable String objectId) {
         return ResponseEntity.ok(service.getHierarchy(namespace, objectId));
+    }
+
+    @GetMapping("/hierarchy/activate/{namespace}")
+    public ResponseEntity<?> activateRoleHierarchy(@NonNull @PathVariable String namespace) {
+        return ResponseEntity.ok(service.activateRoleHierarchy(namespace) ? "Role Hierarchy Activated for Namespace: "+namespace : "");
     }
 
     @PostMapping("/hierarchy")

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/role")
+@RequestMapping("securex/v1/role")
 public class RoleHierarchyController {
     private final RoleHierarchyService service;
 

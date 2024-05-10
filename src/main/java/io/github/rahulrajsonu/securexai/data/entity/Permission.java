@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.Set;
@@ -26,11 +27,9 @@ import java.util.Set;
 @DynamicUpdate
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors(chain = true)
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"objectId", "relation", "namespaceConfig_id"})})
-public class Permission {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Permission extends AbstractPersistable{
 
     @JsonIgnore
     @ManyToOne

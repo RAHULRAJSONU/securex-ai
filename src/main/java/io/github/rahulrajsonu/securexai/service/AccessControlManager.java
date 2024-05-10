@@ -24,7 +24,7 @@ public class AccessControlManager {
         this.namespaceConfigService = namespaceConfigService;
     }
 
-    @Cacheable(value = "accessControlCache", key = "#user + '-' + #tuple.toString()")
+//    @Cacheable(value = "accessControlCache", key = "#user + '-' + #tuple.toString()")
     public boolean checkAccess(String user, RelationTuple tuple, int recursionDepth) {
         if (recursionDepth > MAX_RECURSION_DEPTH) {
             throw new RuntimeException("Exceeded maximum recursion depth while checking for the access: " + user + "-" + tuple.toString());
@@ -45,7 +45,8 @@ public class AccessControlManager {
                 }
             }
         }
-        return namespaceConfigService.checkRoleHierarchy(tuple.namespace(), tuple.objectId(), tuple.user(), tuple.relation());
+        var state = namespaceConfigService.checkRoleHierarchy(tuple.namespace(), tuple.objectId(), tuple.user(), tuple.relation());
+        return state;
     }
 
     public void handleExpression(List<String> expressions) {

@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.Objects;
@@ -22,11 +23,10 @@ import java.util.regex.Pattern;
 @DynamicUpdate
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors(chain = true)
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "namespace", "objectId"})})
-public class RoleHierarchy {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class RoleHierarchy extends AbstractPersistable{
+
     private String name;
     private String expression;
     private String namespace;

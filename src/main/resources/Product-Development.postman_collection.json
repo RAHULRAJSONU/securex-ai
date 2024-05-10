@@ -1,0 +1,269 @@
+{
+	"info": {
+		"_postman_id": "601b46f4-1e84-4bfe-ad1c-96649203c4c9",
+		"name": "Product-Development",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15767377"
+	},
+	"item": [
+		{
+			"name": "auth/namespace/update",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-API-KEY",
+						"value": "d/BVhe5Ao9onAGjYW3rhNg=="
+					},
+					{
+						"key": "X-SECRET-KEY",
+						"value": "6X1aaR9OQBH60fNdOwun+orZSyF98xP7m7g+V5UnSec="
+					},
+					{
+						"key": "X-TenantID",
+						"value": "faecf5b0-3541-4983-8f49-0fe5ba8a0600"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    \"group:eng#member@user:10\",\r\n    \"group:eng#member@user:11\",\r\n    \"group:eng#member@user:12\",\r\n    \"group:eng#member@user:13\",\r\n    \"doc:readme#owner@user:10\",\r\n    \"folder:A#owner@user:10\",\r\n    \"doc:readme#parent@folder:A\",\r\n    \"doc:readme#viewer@group:eng#member\",\r\n    \"group:eng-senior#member@user:10\",\r\n    \"folder:A#viewer@group:eng#member\",\r\n    \"repo:secureX/secureXAi#owner@organization:secureX\",\r\n    \"repo:secureX/secureXAi#admin@team:secureX/core#member\",\r\n    \"repo:secureX/secureXAi#reader@user:11\",\r\n    \"team:secureX/core#member@team:secureX/backend#member\",\r\n    \"team:secureX/backend#member@user:10\"\r\n]"
+				},
+				"url": {
+					"raw": "http://localhost:8080/securex/v1/auth/namespace/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"securex",
+						"v1",
+						"auth",
+						"namespace",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth/check",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-KEY",
+						"value": "d/BVhe5Ao9onAGjYW3rhNg=="
+					},
+					{
+						"key": "X-SECRET-KEY",
+						"value": "6X1aaR9OQBH60fNdOwun+orZSyF98xP7m7g+V5UnSec="
+					},
+					{
+						"key": "X-TenantID",
+						"value": "faecf5b0-3541-4983-8f49-0fe5ba8a0600"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8080/securex/v1/auth/check",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"securex",
+						"v1",
+						"auth",
+						"check"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "role-hierarchy-activate",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-KEY",
+						"value": "d/BVhe5Ao9onAGjYW3rhNg=="
+					},
+					{
+						"key": "X-SECRET-KEY",
+						"value": "6X1aaR9OQBH60fNdOwun+orZSyF98xP7m7g+V5UnSec="
+					},
+					{
+						"key": "X-TenantID",
+						"value": "faecf5b0-3541-4983-8f49-0fe5ba8a0600"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8080/securex/v1/role/hierarchy/activate/team",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"securex",
+						"v1",
+						"role",
+						"hierarchy",
+						"activate",
+						"team"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "role-hierarchy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-API-KEY",
+						"value": "d/BVhe5Ao9onAGjYW3rhNg=="
+					},
+					{
+						"key": "X-SECRET-KEY",
+						"value": "6X1aaR9OQBH60fNdOwun+orZSyF98xP7m7g+V5UnSec="
+					},
+					{
+						"key": "X-TenantID",
+						"value": "faecf5b0-3541-4983-8f49-0fe5ba8a0600"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Role hierarchy for repo\",\r\n    \"expression\": \"owner > admin > editor > member > viewer > reader\",\r\n    \"namespace\": \"team\",\r\n    \"objectId\": \"secureX/core\",\r\n    \"active\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/securex/v1/role/hierarchy",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"securex",
+						"v1",
+						"role",
+						"hierarchy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth/check",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-API-KEY",
+						"value": "d/BVhe5Ao9onAGjYW3rhNg=="
+					},
+					{
+						"key": "X-SECRET-KEY",
+						"value": "6X1aaR9OQBH60fNdOwun+orZSyF98xP7m7g+V5UnSec="
+					},
+					{
+						"key": "X-TenantID",
+						"value": "faecf5b0-3541-4983-8f49-0fe5ba8a0600"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8080/securex/v1/auth/check?namespace=team&objectId=secureX/core&relation=editor&user=user:10",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"securex",
+						"v1",
+						"auth",
+						"check"
+					],
+					"query": [
+						{
+							"key": "namespace",
+							"value": "team"
+						},
+						{
+							"key": "objectId",
+							"value": "secureX/core"
+						},
+						{
+							"key": "relation",
+							"value": "editor"
+						},
+						{
+							"key": "user",
+							"value": "user:10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register/tenant",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"tenantId\": \"70b2c140-e860-455c-aff2-4610455bf24d\",\r\n  \"name\": \"Digital ca Home\",\r\n  \"preferredTenantName\": \"Digital ca Home\",\r\n  \"domain\": \"home.digitalca.com\",\r\n  \"primaryUser\": \"ra9@gmail.com\",\r\n  \"status\": \"ACTIVE\",\r\n  \"accessKey\": \"digital-ca-home\",\r\n  \"authStrategy\": \"ApiKey\"\r\n}"
+				},
+				"url": {
+					"raw": "register/tenant",
+					"host": [
+						"register"
+					],
+					"path": [
+						"tenant"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

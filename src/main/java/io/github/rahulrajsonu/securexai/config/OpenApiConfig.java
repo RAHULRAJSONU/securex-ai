@@ -40,13 +40,27 @@ import org.springframework.stereotype.Component;
         }
 )
 @SecurityScheme(
-        name = "bearerAuth",
-        description = "JWT auth description",
-        scheme = "bearer",
-        type = SecuritySchemeType.HTTP,
-        bearerFormat = "JWT",
-        in = SecuritySchemeIn.HEADER
+        name = "X-API-KEY",
+        description = "X-API-KEY",
+        type = SecuritySchemeType.APIKEY,
+        in = SecuritySchemeIn.HEADER,
+        paramName = "X-API-KEY"
+)
+@SecurityScheme(
+        name = "X-SECRET-KEY",
+        description = "X-SECRET-KEY",
+        type = SecuritySchemeType.APIKEY,
+        in = SecuritySchemeIn.HEADER,
+        paramName = "X-SECRET-KEY"
+)
+@SecurityScheme(
+        name = "X-TenantID",
+        description = "X-TenantID",
+        type = SecuritySchemeType.APIKEY,
+        in = SecuritySchemeIn.HEADER,
+        paramName = "X-TenantID"
 )
 @Component
 public class OpenApiConfig {
+
 }

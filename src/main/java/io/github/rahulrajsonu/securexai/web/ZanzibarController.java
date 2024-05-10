@@ -19,7 +19,7 @@ import java.util.Set;
 
 @Slf4j
 @RestController
-@RequestMapping("/namespace")
+@RequestMapping("securex/v1/auth")
 public class ZanzibarController {
     private final NamespaceConfigService namespaceConfigService;
     private final AccessControlManager accessControlManager;
@@ -30,7 +30,7 @@ public class ZanzibarController {
         this.accessControlManager = accessControlManager;
     }
 
-    @PostMapping("/update")
+    @PostMapping("/namespace/update")
     public void handlePermissionExpression(@RequestBody List<String> expression) {
         accessControlManager.handleExpression(expression);
         log.info("Permission added: {}", expression);
@@ -41,7 +41,7 @@ public class ZanzibarController {
         return namespaceConfigService.getUsers(namespace, objectId, relation);
     }
 
-    @GetMapping
+    @GetMapping("/namespace")
     public NamespaceConfig getNamespaceConfig(String namespace) {
         return namespaceConfigService.getNamespaceConfig(namespace);
     }
@@ -52,13 +52,13 @@ public class ZanzibarController {
         return accessControlManager.checkAccess(user, tuple, 0);
     }
 
-    @PostMapping("/bulk/grant/{namespace}/{relation}")
+    @PostMapping("/namespace/bulk/grant/{namespace}/{relation}")
     public void grantAccessToNamespace(@NonNull String namespace, @NonNull String relation, Set<String> users) {
         namespaceConfigService.addPermission(namespace, "*", relation, users);
         log.info("Access granted to users for all objects in the {} namespace.", namespace);
     }
 
-    @GetMapping("/users")
+    @GetMapping("/namespace/users")
     public Set<String> getUsersWithAccessInNamespace(@RequestParam String namespace, @RequestParam String relation) {
         return namespaceConfigService.getUsers(namespace, "*", relation);
     }
